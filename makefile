@@ -1,3 +1,4 @@
+######## VARIABLES #######
 # Use gcc compiler
 CC = g++
 
@@ -8,12 +9,49 @@ CFLAGS = -g -Wall
 OPT = -O0
 
 # Add your targets here for what files should be compiled.
-TARGET = main
+SMARTCACHETEST = main
 
-all: $(TARGET)
+# Files to run overhead tests
+OVERHEAD = cpu_overhead
 
-$(TARGET): $(TARGET).cpp
-	$(CC) $(CFLAGS) $(OPT) -o $(TARGET) $(TARGET).cpp
+# Execution Extensions
+ifeq ($(OS), Windows_NT)
+	EEXT = .exe
+else
+	EEXT = 
+endif
 
+
+####### COMPILING COMMANDS ########
+
+# Compiling for overhead files. 
+# The :=.cpp is to append cpp extensions for ease of use.
+oh: $(OVERHEAD:=.cpp)
+	$(CC) $(CFLAGS) $(OPT) -o $(OVERHEAD) $(OVERHEAD:=.cpp)
+
+# Compiling for the smart cache test
+sct: $(SMARTCACHETEST:=.cpp)
+	$(CC) $(CFLAGS) $(OPT) -o $(SMARTCACHETEST) $(SMARTCACHETEST:=.cpp)
+
+# Compile everything
+all: oh sct
+
+
+####### RUN COMMANDS ########
+# Run all overhead tests. aohr => all over head run
+aohr: oh
+	$(OVERHEAD:=$(EEXT))
+
+# Run cache test
+sctr: sct
+	$(SMARTCACHETEST:=$(EEXT))
+
+# Run everything
+run: aohr sctr
+
+
+####### CLEAN COMMANDS #######
+
+# Remove everything
 clean:
-	$(RM) $(TARGET)
+	$(RM) $(TARGET) $(OVERHEAD)
