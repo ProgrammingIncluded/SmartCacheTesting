@@ -8,11 +8,24 @@ Furthermore, on top of a heavy operating system like Windows, this system may no
 The overhead source code does not assume the need for Windows operating system.
 However, the main file for testing smart caching assumes a Windows operating system.
 
-## Usage
-> make main
+## Main Usage
+
+### Windows Only
+> make run
+
+Compile all code and run. Used to get overhead and then testing the smart cache.
+
+### Any OS
+> make aohr
+
+Run the overhead tests only. Overhead tests are designed to find out latencies for each part of the operating system.
 
 ## Resources
 * [Prof. Voelker Time Measuring](http://cseweb.ucsd.edu/classes/wi17/cse221-a/timing.html)
 
 ## Required Libraries
 * None
+
+## Q/A
+Will we support non-windows platforms for Smart Cache Test?
+We can if more users inquire them.
