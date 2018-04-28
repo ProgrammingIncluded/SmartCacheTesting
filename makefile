@@ -16,9 +16,10 @@ OVERHEAD = cpu_overhead
 
 # Execution Extensions
 ifeq ($(OS), Windows_NT)
-	EEXT = .exe
+EEXT = .exe
 else
-	EEXT = 
+EEXT = 
+$(warning Smart Caching Test supports only Windows OS for now.)
 endif
 
 
