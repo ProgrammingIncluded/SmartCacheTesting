@@ -62,11 +62,11 @@ all: oh sct
 ####### RUN COMMANDS ########
 # Run all overhead tests. aohr => all over head run
 aohr: oh
-	$(OH_OUT:=$(EEXT))
+	./$(OH_OUT:=$(EEXT))
 
 # Run cache test
 sctr: sct
-	$(SCT_OUT:=$(EEXT))
+	./$(SCT_OUT:=$(EEXT))
 
 # Run everything
 run: aohr sctr
