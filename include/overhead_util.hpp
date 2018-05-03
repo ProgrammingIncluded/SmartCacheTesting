@@ -19,7 +19,8 @@
 #include <iostream>
 
 /**
- * Function to return now time in cycles.
+ * Function to return now time in cycles. Make sure value is in
+ * range of cycles.
  **/
 long double oh_now();
 

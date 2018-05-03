@@ -8,7 +8,8 @@
 
 
 long double oh_now() {
-    std::cout << "RAWR" << std::endl;
+    FILETIME a, b, c, d;
+    GetProcessTimes(GetCurrentProcess(), &a, &b, &c, &d);
     return 10;
 }
 

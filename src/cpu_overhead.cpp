@@ -17,8 +17,10 @@ unsigned int WAIT_TIME_MS = 10;
 // Function to calculate cycles for program
 // As per professor Voelker's advice. Measure by known time.
 long double calculate_cycles() {
+    long double start = oh_now();
     oh_sleep(10);
-    return 100;
+    start = oh_now() - start;
+    return start;
 }
 
 // Main function
