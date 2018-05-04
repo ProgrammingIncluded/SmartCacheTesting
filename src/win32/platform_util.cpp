@@ -4,10 +4,10 @@
  * By: ProgrammingIncluded
  * Website: ProgrammingIncluded.github.io
 *******************************************/
-#include "overhead_util.hpp"
+#include "platform_util.hpp"
 
 
-long double oh_now() {
+long double platu::now() {
     // Try just using chrono library.
     LARGE_INTEGER freq, val;
     if(!QueryPerformanceCounter(&val))
@@ -18,6 +18,6 @@ long double oh_now() {
     return (long double) val.QuadPart / (long double) freq.QuadPart;
 }
 
-void oh_sleep(unsigned int ms) {
+void platu::sleep(unsigned int ms) {
     Sleep(ms);
 }

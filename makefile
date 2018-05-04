@@ -22,7 +22,7 @@ SMARTCACHETEST = main
 OVERHEAD = cpu_overhead
 
 # Utilities
-UTIL = overhead_util
+UTIL = platform_util
 
 # Output name will be same as cpp file
 SCT_OUT = $(SMARTCACHETEST)

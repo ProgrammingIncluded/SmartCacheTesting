@@ -9,19 +9,20 @@
 #include <iostream>
 #include <chrono>
 
-#include "overhead_util.hpp"
+#include "platform_util.hpp"
 
 // Number of times to run for loop
-unsigned int LOOP_RUN = 1;
+// Stats will be generated based off that.
+unsigned int LOOP_RUN = 100;
 
 // Function to calculate cycles for program
 // As per professor Voelker's advice. Measure by known time.
 long double for_loop_overhead() {
-    long double start = oh_now();
+    long double start = platu::now();
     for(unsigned int x = 0; x < LOOP_RUN; ++x) {
         // Set an empty loop here.
     }
-    start = (oh_now() - start);
+    start = (platu::now() - start);
     start /= LOOP_RUN;
     return start;
 }
