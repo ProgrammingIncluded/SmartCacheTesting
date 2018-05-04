@@ -21,8 +21,11 @@ SMARTCACHETEST = main
 # Files to run overhead tests
 OVERHEAD = cpu_overhead
 
-# Utilities
-UTIL = platform_util
+# Platform Utilities
+PLAT_UTIL = platform_util
+
+# General Includes
+GEN_UTIL = general_util
 
 # Output name will be same as cpp file
 SCT_OUT = $(SMARTCACHETEST)
@@ -31,15 +34,16 @@ OH_OUT = $(OVERHEAD)
 # Append our folder values
 SCT_FOLD := $(addprefix $(SRC)/, $(SMARTCACHETEST))
 OH_FOLD := $(addprefix $(SRC)/, $(OVERHEAD))
+GEN_UTIL := $(addprefix $(SRC)/, $(GEN_UTIL))
 
 
 # Execution Extensions
 ifeq ($(OS), Windows_NT)
 EEXT = .exe
-UTIL_OUT = $(SRC)/win32/$(UTIL)
+PLAT_UTIL_OUT = $(SRC)/win32/$(PLAT_UTIL)
 else
 EEXT = 
-UTIL_OUT = $(SRC)/posix/$(UTIL)
+PLAT_UTIL_OUT = $(SRC)/posix/$(PLAT_UTIL)
 $(warning Smart Caching Test supports only Windows OS for now.)
 endif
 
@@ -49,11 +53,11 @@ endif
 # Compiling for overhead files. 
 # The :=.cpp is to append cpp extensions for ease of use.
 oh: $(OH_FOLD:=.cpp)
-	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(OH_OUT) $(OH_FOLD:=.cpp) $(UTIL_OUT:=.cpp)
+	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(OH_OUT) $(OH_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
 
 # Compiling for the smart cache test
 sct: $(SCT_FOLD:=.cpp)
-	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(SCT_OUT) $(SCT_FOLD:=.cpp) $(UTIL_OUT:=.cpp)
+	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(SCT_OUT) $(SCT_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
 
 # Compile everything
 all: oh sct

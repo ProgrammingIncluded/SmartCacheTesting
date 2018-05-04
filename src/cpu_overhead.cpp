@@ -10,6 +10,10 @@
 #include <chrono>
 
 #include "platform_util.hpp"
+#include "general_util.hpp"
+
+// Number of samples to run each overhead function.
+unsigned int SAMPLE_SIZE = 1000000;
 
 // Number of times to run for loop
 // Stats will be generated based off that.
@@ -29,5 +33,8 @@ long double for_loop_overhead() {
 
 // Main function
 int main(int argc, char **argv) {
-    std::cout << for_loop_overhead() << std::endl;
+    // Output
+    std::cout << "Number of Runs: " << SAMPLE_SIZE << std::endl;
+    std::cout << "Looping Overhead With Loop of Size: " << LOOP_RUN << std::endl;
+    std::cout << multirun<long double>(for_loop_overhead, SAMPLE_SIZE) << " ns" << std::endl;
 }
