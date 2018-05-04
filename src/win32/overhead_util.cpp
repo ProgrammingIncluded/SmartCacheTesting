@@ -15,7 +15,7 @@ long double oh_now() {
     else if(!QueryPerformanceFrequency(&freq))
         return 0;
 
-    return (long double) val.QuadPart / (long double) freq.QuadPart * 1000;
+    return (long double) val.QuadPart / (long double) freq.QuadPart;
 }
 
 void oh_sleep(unsigned int ms) {

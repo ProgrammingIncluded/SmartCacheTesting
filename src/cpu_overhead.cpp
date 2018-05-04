@@ -7,12 +7,9 @@
  *       OS services overhead.
 *******************************************/
 #include <iostream>
-#include "overhead_util.hpp"
 #include <chrono>
-#include <thread>
 
-// Amount of time to wait for measuring cycles.
-unsigned int WAIT_TIME_MS = 10;
+#include "overhead_util.hpp"
 
 // Number of times to run for loop
 unsigned int LOOP_RUN = 1;
@@ -26,7 +23,7 @@ long double for_loop_overhead() {
     }
     start = (oh_now() - start);
     start /= LOOP_RUN;
-    return (long double) start;
+    return start;
 }
 
 // Main function

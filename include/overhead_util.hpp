@@ -19,8 +19,9 @@
 #include <iostream>
 
 /**
- * Function to return now time in cycles. Make sure value is in
- * range of cycles. Return milliseconds
+ * Function to return now time in cycles per PROCESS, not thread. Make sure value is in
+ * range of cycles. Return nanoseconds. So if process has 2 threads, time is 2 times faster
+ * than per thread.
  **/
 long double oh_now();
 
