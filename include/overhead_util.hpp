@@ -20,7 +20,7 @@
 
 /**
  * Function to return now time in cycles. Make sure value is in
- * range of cycles.
+ * range of cycles. Return milliseconds
  **/
 long double oh_now();
 

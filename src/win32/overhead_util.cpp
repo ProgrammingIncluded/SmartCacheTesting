@@ -8,9 +8,14 @@
 
 
 long double oh_now() {
-    FILETIME a, b, c, d;
-    GetProcessTimes(GetCurrentProcess(), &a, &b, &c, &d);
-    return 10;
+    // Try just using chrono library.
+    LARGE_INTEGER freq, val;
+    if(!QueryPerformanceCounter(&val))
+        return 0;
+    else if(!QueryPerformanceFrequency(&freq))
+        return 0;
+
+    return (long double) val.QuadPart / (long double) freq.QuadPart * 1000;
 }
 
 void oh_sleep(unsigned int ms) {
