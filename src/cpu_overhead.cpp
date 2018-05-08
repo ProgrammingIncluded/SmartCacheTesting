@@ -3,7 +3,7 @@
  * File: cpu_overhead.cpp
  * By: ProgrammingIncluded
  * Website: ProgrammingIncluded.github.io
- * Desc: File to hold CPU, scheduling, and 
+ * Desc: File to hold CPU, scheduling, and
  *       OS services overhead.
 *******************************************/
 #include <iostream>
@@ -27,9 +27,9 @@ long double for_loop_overhead() {
     for(unsigned int x = 0; x < LOOP_RUN; ++x) {
         // Set an empty loop here.
     }
-    start = (platu::now() - start);
-    start /= LOOP_RUN;
-    return start;
+    long double end = platu::now();
+    long double overhead = (end-start)/LOOP_RUN;
+    return overhead;
 }
 
 // Function to measure overhead procedure calls.
