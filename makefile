@@ -42,7 +42,7 @@ ifeq ($(OS), Windows_NT)
 EEXT = .exe
 PLAT_UTIL_OUT = $(SRC)/win32/$(PLAT_UTIL)
 else
-EEXT = 
+EEXT =
 PLAT_UTIL_OUT = $(SRC)/posix/$(PLAT_UTIL)
 $(warning Smart Caching Test supports only Windows OS for now.)
 endif
@@ -50,7 +50,7 @@ endif
 
 ####### COMPILING COMMANDS ########
 
-# Compiling for overhead files. 
+# Compiling for overhead files.
 # The :=.cpp is to append cpp extensions for ease of use.
 oh: $(OH_FOLD:=.cpp)
 	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(OH_OUT) $(OH_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
@@ -59,8 +59,18 @@ oh: $(OH_FOLD:=.cpp)
 sct: $(SCT_FOLD:=.cpp)
 	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(SCT_OUT) $(SCT_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
 
+# Compiling for the memory overhead files
+memory: memory.o
+	$(CC) memory.o -o memory
+
+memory.o: memory.cpp memory.hpp
+	$(CC) $(CFLAGS) -c memory.cpp memory.hpp
+
 # Compile everything
-all: oh sct
+all: oh sct memory
+
+
+
 
 
 ####### RUN COMMANDS ########
@@ -80,4 +90,4 @@ run: aohr sctr
 
 # Remove everything
 clean:
-	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT))
+	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT)) memory.o memory *.gch
