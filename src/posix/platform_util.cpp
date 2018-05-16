@@ -17,3 +17,8 @@ long double platu::now() {
 void platu::sleep(unsigned int ms) {
     usleep(ms);
 }
+
+void platu::generic_sys_call() {
+    // TODO: Check to make sure Linux does not cache this.
+    getpid();
+}

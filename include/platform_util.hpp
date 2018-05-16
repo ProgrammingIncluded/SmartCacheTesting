@@ -34,4 +34,9 @@ namespace platu {
      **/
     void sleep(unsigned int ms);
 
+    /**
+     * Wrapper for a sample system call for measurement.
+     * System call gurantees that the function called is not cached.
+     **/
+    void generic_sys_call();
 }

@@ -59,15 +59,8 @@ oh: $(OH_FOLD:=.cpp)
 sct: $(SCT_FOLD:=.cpp)
 	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(SCT_OUT) $(SCT_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
 
-# Compiling for the memory overhead files
-memory: memory.o
-	$(CC) memory.o -o memory
-
-memory.o: memory.cpp memory.hpp
-	$(CC) $(CFLAGS) -c memory.cpp memory.hpp
-
 # Compile everything
-all: oh sct memory
+all: oh sct
 
 
 
@@ -90,4 +83,4 @@ run: aohr sctr
 
 # Remove everything
 clean:
-	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT)) memory.o memory *.gch
+	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT))

@@ -21,3 +21,8 @@ long double platu::now() {
 void platu::sleep(unsigned int ms) {
     Sleep(ms);
 }
+
+void platu::generic_sys_call() {
+    // Windows should not cache this function.
+    GetCurrentProcessId();
+}

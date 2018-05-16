@@ -42,6 +42,7 @@ int func_call_arg5(int arg0, int arg1, int arg2, int arg3, int arg4) { return 0;
 int func_call_arg6(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) { return 0; }
 int func_call_arg7(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) { return 0; }
 
+// Function to run tests on function overhead.
 std::vector<long double> function_call_overhead() {
     std::vector<long double> result;
 
@@ -88,11 +89,20 @@ std::vector<long double> function_call_overhead() {
     return result;
 }
 
+// Function to test function on overhead of system call.
+long double sys_call_overhead() {
+    long double start = platu::now();
+    platu::generic_sys_call();
+    long double end = platu::now();
+    long double overhead = (end-start);
+    return overhead;
+}
+
 // Main function
 int main(int argc, char **argv) {
     // Output Loop Overhead
     std::cout << "Number of Runs: " << SAMPLE_SIZE << std::endl;
-    std::cout << "Looping Overhead Averaged Over: " << LOOP_RUN << std::endl;
+    std::cout << "Looping Overhead Averaged Over: " << LOOP_RUN << " loops per sample" << std::endl;
     std::cout << multirun<long double>(for_loop_overhead, SAMPLE_SIZE) << " ns" << std::endl;
 
     // Output Function Call Overhead
@@ -102,4 +112,11 @@ int main(int argc, char **argv) {
     for(unsigned int i = 0; i < results.size(); ++i) {
         std::cout << "Number Arguments " << i << ": " << results[i] << " ns" << std::endl;
     }
+
+    // System call overhead.
+    // Much like linux equivalent except we are now measuring get PID directly
+    std::cout << "\nNumber of Runs: " << SAMPLE_SIZE << std::endl;
+    std::cout << "System Call Overhead: ";
+    std::cout << multirun<long double>(sys_call_overhead, SAMPLE_SIZE) << " ns" << std::endl;
+
 }
