@@ -21,6 +21,11 @@
 namespace platu {
 
     /**
+     * Platform Setup Specific Functions.
+     **/
+    void setup();
+
+    /**
      * Function to return now time in cycles per PROCESS, not thread. Make sure value is in
      * range of cycles. Return nanoseconds. So if process has 2 threads, time is 2 times faster
      * than per thread.
@@ -39,4 +44,19 @@ namespace platu {
      * System call gurantees that the function called is not cached.
      **/
     void generic_sys_call();
+
+    /**
+     * Dummy function called in order to our threads.
+     **/
+    void user_thread_dummy_function();
+
+    /**
+     * Generate a user-level thread and then close it immediately.
+     **/
+    void gen_user_lvl_thread();
+
+    /**
+     * Generate a kernel-level thread and then close it immediately.
+     **/
+    void gen_kernel_lvl_thread();
 }

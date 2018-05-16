@@ -98,8 +98,21 @@ long double sys_call_overhead() {
     return overhead;
 }
 
+// Function to test function on overhead of user level thread execution
+long double user_lvl_thread_overhead() {
+    long double start = platu::now();
+    platu::gen_user_lvl_thread();
+    long double end = platu::now();
+    long double overhead = (end-start);
+    return overhead;
+}
+
 // Main function
 int main(int argc, char **argv) {
+    // Setup platform specific functions
+    // Could in theory run the file in platform specific file.
+    platu::setup();
+
     // Output Loop Overhead
     std::cout << "Number of Runs: " << SAMPLE_SIZE << std::endl;
     std::cout << "Looping Overhead Averaged Over: " << LOOP_RUN << " loops per sample" << std::endl;
@@ -119,4 +132,8 @@ int main(int argc, char **argv) {
     std::cout << "System Call Overhead: ";
     std::cout << multirun<long double>(sys_call_overhead, SAMPLE_SIZE) << " ns" << std::endl;
 
+    // User level thread overhead
+    std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 1000 << std::endl;
+    std::cout << "User Level Thread Call Overhead: ";
+    std::cout << multirun<long double>(user_lvl_thread_overhead, SAMPLE_SIZE / 1000) << " ns" << std::endl;
 }
