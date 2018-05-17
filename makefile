@@ -27,15 +27,25 @@ PLAT_UTIL = platform_util
 # General Includes
 GEN_UTIL = general_util
 
+# Memory Characterization
+LATENCY = latency
+MEMORYBW = memory_bw
+PAGEFAULT = page_fault
+
 # Output name will be same as cpp file
 SCT_OUT = $(SMARTCACHETEST)
 OH_OUT = $(OVERHEAD)
+LATENCY_OUT = $(LATENCY)
+MEMORYBW_OUT = $(MEMORYBW)
+PAGEFAULT_OUT = $(PAGEFAULT)
 
 # Append our folder values
 SCT_FOLD := $(addprefix $(SRC)/, $(SMARTCACHETEST))
 OH_FOLD := $(addprefix $(SRC)/, $(OVERHEAD))
 GEN_UTIL := $(addprefix $(SRC)/, $(GEN_UTIL))
-
+LATENCY_FOLD := $(addprefix $(SRC)/, $(LATENCY))
+MEMORYBW_FOLD := $(addprefix $(SRC)/, $(MEMORYBW))
+PAGEFAULT_FOLD := $(addprefix $(SRC)/, $(PAGEFAULT))
 
 # Execution Extensions
 ifeq ($(OS), Windows_NT)
@@ -59,12 +69,17 @@ oh: $(OH_FOLD:=.cpp)
 sct: $(SCT_FOLD:=.cpp)
 	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(SCT_OUT) $(SCT_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
 
+latency: $(LATENCY_FOLD:=.cpp)
+	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(LATENCY_OUT) $(LATENCY_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
+
+memorybw: $(MEMORYBW_FOLD:=.cpp)
+	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(MEMORYBW_OUT) $(MEMORYBW_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
+
+pagefault: $(PAGEFAULT_FOLD:=.cpp)
+	$(CC) $(CFLAGS) $(CFOLD) $(OPT) -o $(PAGEFAULT_OUT) $(PAGEFAULT_FOLD:=.cpp) $(GEN_UTIL:=.cpp) $(PLAT_UTIL_OUT:=.cpp)
+
 # Compile everything
-all: oh sct
-
-
-
-
+all: oh sct latency memorybw pagefault
 
 ####### RUN COMMANDS ########
 # Run all overhead tests. aohr => all over head run
@@ -83,4 +98,4 @@ run: aohr sctr
 
 # Remove everything
 clean:
-	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT))
+	$(RM) $(OH_OUT:=$(EEXT)) $(SCT_OUT:=$(EEXT)) $(LATENCY_OUT:=$(EEXT)) $(MEMORYBW_OUT:=$(EEXT)) $(PAGEFAULT_OUT:=$(EEXT))
