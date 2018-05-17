@@ -14,9 +14,11 @@
 #include <thread>
 #include <time.h>
 #include <unistd.h>
+#include <sys/mman.h>
 #endif
 
 #include <iostream>
+#include <string>
 
 namespace platu {
 
@@ -71,9 +73,23 @@ namespace platu {
      **/
     void awaiting();
     
-
     /**
      * Measure kernel context switch time using OS specific code.
      **/
     long double kthread_cs_time();
+
+    /**
+     * Open the file.
+     **/
+    int64_t open(std::string fn);
+
+    /**
+     * Close the file.
+     **/
+    void close(int64_t fd);
+
+    /**
+     * Maps the file to program memory space.
+     **/
+    void* mmap(int64_t fd, int maxsize, int64_t offset);
 }

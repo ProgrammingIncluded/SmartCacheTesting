@@ -83,7 +83,7 @@ all: oh sct latency memorybw pagefault
 
 ####### RUN COMMANDS ########
 # Run all overhead tests. aohr => all over head run
-aohr: oh
+aohr: oh latency memorybw pagefault
 	./$(OH_OUT:=$(EEXT))
 
 # Run cache test

@@ -31,12 +31,12 @@ void init_array(){
   array = (page_t*) malloc(sizeof(page_t)*size);
 
   int next[size];
-  for(int i=0;i<size;i++){
+  for(unsigned int i=0;i<size;i++){
     next[i] = i;
   }
   std::random_shuffle(&next[0], &next[size], myrandom);
 
-  for(int i=0;i<size-1;i++){
+  for(unsigned int i=0;i<size-1;i++){
     array[next[i]].next = next[i+1] * 4096;
   }
   array[next[size-1]].next = next[0] * 4096;
@@ -48,7 +48,7 @@ void init_array(){
   }
   dataFile.write((char*)array,size*4096);
 
-  for(int i=0;i<size;i++){
+  for(unsigned int i=0;i<size;i++){
     array[i].next = 0.0;
   }
 }
@@ -56,14 +56,19 @@ void init_array(){
 void measure_latency(){
   // Measure the loop overhead first
   volatile unsigned long long int i;
-  int fd = -1;
+  int64_t fd = -1;
 
-  if((fd = open("data.bin", O_RDWR))==-1){
+  // if((fd = open("data.bin", O_RDWR))==-1){
+  std::cout << "TEST1" << std::endl;
+  if((fd = platu::open("data.bin")) == -1) {
     std::cout<<"Error opening binary"<<std::endl;
     exit(2);
   }
 
-  page_t* next = (page_t*)mmap(NULL, 4096, PROT_READ, MAP_PRIVATE, fd, 0);
+  // page_t* next = (page_t*)mmap(NULL, 4096, PROT_READ, MAP_PRIVATE, fd, 0);
+  std::cout << "TEST2" << std::endl;
+  page_t* next = (page_t*) platu::mmap(fd, 4096, 0);
+  std::cout << "TEST3" << std::endl;
 
   auto loop_start = platu::now();
   for(i=0;i<size;i++){
@@ -74,7 +79,8 @@ void measure_latency(){
   // Measure the memory latency
   auto page_fault_start = platu::now();
   for(i=0;i<size;i++){
-    next = (page_t*)mmap(NULL, 4096, PROT_READ, MAP_PRIVATE, fd, next->next);
+    // next = (page_t*)mmap(NULL, 4096, PROT_READ, MAP_PRIVATE, fd, next->next);
+    next = (page_t*) platu::mmap(fd, 4096, next->next);
   }
   auto page_fault_end = platu::now();
 
@@ -82,7 +88,7 @@ void measure_latency(){
   std::cout<<"The page fault service time for array of size "<<size*4096<<" Bytes is "<<
   page_fault_overhead*1000000000/size<<" ns\n";
 
-  close(fd);
+  platu::close(fd);
 }
 
 void delete_array(){

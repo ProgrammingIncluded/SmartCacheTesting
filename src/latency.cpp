@@ -34,12 +34,12 @@ void init_array(){
   array = (line_t*) malloc(sizeof(line_t)*size);
 
   int next[size];
-  for(int i=0;i<size;i++){
+  for(unsigned int i=0;i<size;i++){
     next[i] = i;
   }
   std::random_shuffle(&next[0], &next[size], myrandom);
 
-  for(int i=0;i<size-1;i++){
+  for(unsigned int i=0;i<size-1;i++){
     array[next[i]].next = next[i+1];
   }
   array[next[size-1]].next = next[0];

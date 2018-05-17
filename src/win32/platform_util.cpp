@@ -98,3 +98,45 @@ long double platu::kthread_cs_time() {
     // Divide by two because there are technically two context switches.
     return (end - start - 0.001)/2.0;
 }
+
+int64_t platu::open(std::string fn) {
+    HANDLE result = CreateFile(
+        fn.c_str(), 
+        GENERIC_WRITE,
+        0,
+        nullptr, 
+        CREATE_NEW,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+
+    // TODO: Have a better struct
+    // Could be that the thing casted is also -1.
+   if((int64_t) result == 0)
+        return -1;
+    return (int64_t) result;
+}
+
+void platu::close(int64_t fd) {
+    CloseHandle((HANDLE) fd);
+}
+
+void* platu::mmap(int64_t fd, int maxsize, int64_t offset) {
+    HANDLE mapping = CreateFileMapping(
+        (HANDLE) fd,
+        nullptr,
+        PAGE_READONLY,
+        0,
+        0,
+        nullptr
+    );
+    unsigned int upperbits = (unsigned int) (offset >> 32); 
+    void* res = (void *) MapViewOfFile(
+        mapping,
+        FILE_MAP_READ,
+        upperbits,
+        (unsigned int) offset,
+        maxsize
+    );
+    return res;
+}

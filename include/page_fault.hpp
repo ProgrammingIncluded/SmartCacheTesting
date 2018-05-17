@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <fstream>
 #include <sys/stat.h>
-#include <sys/mman.h>
 #include <fcntl.h>
 #include <chrono>
 #include <cmath>
