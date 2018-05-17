@@ -98,10 +98,19 @@ long double sys_call_overhead() {
     return overhead;
 }
 
-// Function to test function on overhead of user level thread execution
+// Function to test function on overhead of user level thread execution.
 long double user_lvl_thread_overhead() {
     long double start = platu::now();
     platu::gen_user_lvl_thread();
+    long double end = platu::now();
+    long double overhead = (end-start);
+    return overhead;
+}
+
+// Function to test function on overhead of kernel level thread execution.
+long double kernel_lvl_thread_overhead() {
+    long double start = platu::now();
+    platu::gen_kernel_lvl_thread();
     long double end = platu::now();
     long double overhead = (end-start);
     return overhead;
@@ -136,4 +145,10 @@ int main(int argc, char **argv) {
     std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 1000 << std::endl;
     std::cout << "User Level Thread Call Overhead: ";
     std::cout << multirun<long double>(user_lvl_thread_overhead, SAMPLE_SIZE / 1000) << " ns" << std::endl;
+
+    // Kernel level thread overhead
+    std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 1000 << std::endl;
+    std::cout << "Kernel Level Thread Call Overhead: ";
+    std::cout << multirun<long double>(kernel_lvl_thread_overhead, SAMPLE_SIZE / 1000) << std::endl;
+
 }

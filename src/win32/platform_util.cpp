@@ -37,6 +37,9 @@ void platu::user_thread_dummy_function() {
     SwitchToFiber(fib);
 }
 
+void platu::kernel_thread_dummy_function() {
+}
+
 void platu::gen_user_lvl_thread() {
     // In Windows we can create Fibers to do our work.
     // Fibers are essentially user level threads
@@ -56,5 +59,16 @@ void platu::gen_user_lvl_thread() {
 }
 
 void platu::gen_kernel_lvl_thread() {
+    // Create the thread
+    HANDLE threadList[1];
+    threadList[0] = CreateThread(
+        nullptr,
+        0,
+        (LPTHREAD_START_ROUTINE) kernel_thread_dummy_function,
+        nullptr,
+        0,
+        nullptr
+    );
 
+    WaitForMultipleObjects(1, threadList, TRUE, INFINITE);
 }

@@ -46,9 +46,14 @@ namespace platu {
     void generic_sys_call();
 
     /**
-     * Dummy function called in order to our threads.
+     * Dummy function called in order to test user level threads.
      **/
     void user_thread_dummy_function();
+
+    /**
+     * Dummy function called in order to test kernel level threads
+     **/
+    void kernel_thread_dummy_function();
 
     /**
      * Generate a user-level thread and then close it immediately.
