@@ -55,7 +55,6 @@ void platu::gen_user_lvl_thread() {
 
     // Delete the created fiber.
     DeleteFiber(fib);
-
 }
 
 void platu::gen_kernel_lvl_thread() {
@@ -70,5 +69,32 @@ void platu::gen_kernel_lvl_thread() {
         nullptr
     );
 
+    // Wait for thread to finish.
     WaitForMultipleObjects(1, threadList, TRUE, INFINITE);
+}
+
+void platu::awaiting() {
+    Sleep(1);
+}
+
+long double platu::kthread_cs_time() {
+    // Create the thread
+    HANDLE threadList[1];
+    long double start = now();
+    threadList[0] = CreateThread(
+        nullptr,
+        0,
+        (LPTHREAD_START_ROUTINE) awaiting,
+        nullptr,
+        0,
+        nullptr
+    );
+
+    // Wait for thread to finish.
+    WaitForMultipleObjects(1, threadList, TRUE, INFINITE);
+    long double end = now();
+
+    // Subtract by 0.01 to get the sleep time.
+    // Divide by two because there are technically two context switches.
+    return (end - start - 0.001)/2.0;
 }

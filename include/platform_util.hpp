@@ -27,7 +27,7 @@ namespace platu {
 
     /**
      * Function to return now time in cycles per PROCESS, not thread. Make sure value is in
-     * range of cycles. Return nanoseconds. So if process has 2 threads, time is 2 times faster
+     * range of cycles. Return seconds. So if process has 2 threads, time is 2 times faster
      * than per thread.
      **/
     long double now();
@@ -64,4 +64,16 @@ namespace platu {
      * Generate a kernel-level thread and then close it immediately.
      **/
     void gen_kernel_lvl_thread();
+
+    /**
+     * A dummy function that has a fixed time duration, used for measuring context
+     * switches. waiting should be 10ms or so.
+     **/
+    void awaiting();
+    
+
+    /**
+     * Measure kernel context switch time using OS specific code.
+     **/
+    long double kthread_cs_time();
 }

@@ -125,30 +125,34 @@ int main(int argc, char **argv) {
     // Output Loop Overhead
     std::cout << "Number of Runs: " << SAMPLE_SIZE << std::endl;
     std::cout << "Looping Overhead Averaged Over: " << LOOP_RUN << " loops per sample" << std::endl;
-    std::cout << multirun<long double>(for_loop_overhead, SAMPLE_SIZE) << " ns" << std::endl;
+    std::cout << multirun<long double>(for_loop_overhead, SAMPLE_SIZE) << "s" << std::endl;
 
     // Output Function Call Overhead
     std::cout << "\nNumber of Runs: " << SAMPLE_SIZE << std::endl;
-    std::cout << "Function Call Overhead" << std::endl;
+    std::cout << "Function Call Overhead: " << std::endl;
     auto results = multirun_multiout<long double>(function_call_overhead, SAMPLE_SIZE);
     for(unsigned int i = 0; i < results.size(); ++i) {
-        std::cout << "Number Arguments " << i << ": " << results[i] << " ns" << std::endl;
+        std::cout << "Number Arguments " << i << ": " << results[i] << "s" << std::endl;
     }
 
     // System call overhead.
     // Much like linux equivalent except we are now measuring get PID directly
     std::cout << "\nNumber of Runs: " << SAMPLE_SIZE << std::endl;
     std::cout << "System Call Overhead: ";
-    std::cout << multirun<long double>(sys_call_overhead, SAMPLE_SIZE) << " ns" << std::endl;
+    std::cout << multirun<long double>(sys_call_overhead, SAMPLE_SIZE) << "s" << std::endl;
 
     // User level thread overhead
     std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 1000 << std::endl;
     std::cout << "User Level Thread Call Overhead: ";
-    std::cout << multirun<long double>(user_lvl_thread_overhead, SAMPLE_SIZE / 1000) << " ns" << std::endl;
+    std::cout << multirun<long double>(user_lvl_thread_overhead, SAMPLE_SIZE / 1000) << "s" << std::endl;
 
     // Kernel level thread overhead
     std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 1000 << std::endl;
     std::cout << "Kernel Level Thread Call Overhead: ";
-    std::cout << multirun<long double>(kernel_lvl_thread_overhead, SAMPLE_SIZE / 1000) << std::endl;
+    std::cout << multirun<long double>(kernel_lvl_thread_overhead, SAMPLE_SIZE / 1000) << "s" << std::endl;
 
+    // Kernel level thread context switch time
+    std::cout << "\nNumber of Runs: " << SAMPLE_SIZE / 10000 << std::endl;
+    std::cout << "Kernel Level Thread Context-Switch Overhead: ";
+    std::cout << multirun<long double>(platu::kthread_cs_time, SAMPLE_SIZE / 10000) << "s" << std::endl;
 }
