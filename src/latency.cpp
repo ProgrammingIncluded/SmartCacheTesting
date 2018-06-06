@@ -33,16 +33,17 @@ void init_array(){
   size = std::pow(2,size);
   array = (line_t*) malloc(sizeof(line_t)*size);
 
-  int next[size];
-  for(int i=0;i<size;i++){
+  unsigned int *next = new unsigned int[size];
+  for(unsigned int i=0;i<size;i++){
     next[i] = i;
   }
   std::random_shuffle(&next[0], &next[size], myrandom);
 
-  for(int i=0;i<size-1;i++){
+  for(unsigned int i=0;i<size-1;i++){
     array[next[i]].next = next[i+1];
   }
   array[next[size-1]].next = next[0];
+  delete [] next;
 }
 
 void measure_latency(){
@@ -62,7 +63,7 @@ void measure_latency(){
     next = array[next].next;
   }
   auto memory_end = platu::now();
-
+  std::cout << "RAWR" << std::endl;
   long double memory_overhead = (memory_end-memory_start)-(loop_end-loop_start);
   std::cout<<"The memory latency for size "<<size*64<<" Bytes over "<<repetitions<<" reps is "<<
   memory_overhead*1000000000/(repetitions*size)<<" ns\n";

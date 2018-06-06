@@ -9,8 +9,8 @@
 #include <cmath>
 
 struct line_t{
-  int next;
-  int filler[15];
+  unsigned int next;
+  unsigned int filler[15];
 };
 
 int main(int argc, char* argv[]);
